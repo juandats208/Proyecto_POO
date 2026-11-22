@@ -6,7 +6,7 @@ MagoFuego::MagoFuego(const std::string& nombre)
     this -> turnosQuemadura = 3;
 }
 
-void MagoFuego::atacar(Entidad& objetivo) const {
+void MagoFuego::atacar(Entidad& objetivo) {
     std::cout << nombre << " lanza una llamarada a " << objetivo.getNombre() << "\n";
     objetivo.recibirDanio(ataque, "fuego");
 }
