@@ -17,7 +17,7 @@ public:
 
     //Metodos
 
-    virtual void atacar(Entidad& objetivo) const = 0;
+    virtual void atacar(Entidad& objetivo) = 0;
     virtual void recibirDanio(int cantidad, std::string tipo);
     void curar(int cantidad);
     bool estaVivo() const;
