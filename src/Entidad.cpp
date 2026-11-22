@@ -1,0 +1,77 @@
+#include "Entidad.h"
+#include <iostream>
+
+Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
+    this -> vidaAct = vida;
+    this -> vidaMax = vida;
+    this -> ataque = ataque;
+    this -> nombre = nombre;
+    this -> congelado = false;
+    this -> turnosEnvenenado = 0;
+    this -> turnosQuemado = 0;
+}
+
+void Entidad::recibirDanio(int cantidad, std::string tipo) {
+    if (cantidad <= 0) {
+        std::cout << "El daño no puede ser negativo o igual a 0 \n";
+    }
+    vidaAct -= cantidad;
+    if (vidaAct - cantidad < 0) {
+        vidaAct = 0;
+    }
+}
+
+void Entidad::curar(int cantidad) {
+    vidaAct += cantidad;
+    if (vidaAct > vidaMax) {
+        vidaAct = vidaMax;
+    }
+}
+
+bool Entidad::estaVivo() const {
+    if (vidaAct > 0) {
+        return true;
+    }
+}
+
+void Entidad::congelar() {
+    congelado = true;
+}
+
+void Entidad::quemar(int turnos) {
+    turnosQuemado = turnos;
+}
+
+void Entidad::envenenar(int turnos) {
+    turnosEnvenenado = turnos;
+}
+
+void Entidad::quitarEstados() {
+    congelado = false;
+    turnosQuemado = 0;
+    turnosEnvenenado = 0;
+}
+
+bool Entidad::procesarEstados() {
+
+    if (turnosQuemado > 0) {
+        recibirDanio(5, "fuego");
+        turnosQuemado--;
+    }
+
+    if (turnosEnvenenado > 0) {
+        recibirDanio(3, "normal");
+        turnosEnvenenado--;
+    }
+
+    if (vidaAct <= 0) {
+        return false;
+    }
+
+    if (congelado == true) {
+        congelado = false;
+        return false;
+    }
+
+    return true;
+}
