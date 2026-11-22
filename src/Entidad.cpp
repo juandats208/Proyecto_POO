@@ -13,6 +13,8 @@ Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
 
 Entidad::~Entidad() {
 
+    std::cout << nombre << " fue eliminado \n";
+
 }
 
 void Entidad::recibirDanio(int cantidad, std::string tipo) {
@@ -85,6 +87,7 @@ bool Entidad::procesarEstados() {
 void Entidad::subirAtaque(int cantidad) {
     if (cantidad <= 0) {
         std::cout << "La cantidad debe ser mayor que 0 \n";
+        return;
     }
     ataque += cantidad;
 }
