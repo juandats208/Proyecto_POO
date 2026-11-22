@@ -1,0 +1,4 @@
+cmake-build-*/
+.idea/
+partida.txt
+*.exe
