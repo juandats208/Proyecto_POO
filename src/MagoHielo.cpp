@@ -5,7 +5,7 @@ MagoHielo::MagoHielo(const std::string& nombre)
     : Jugador(nombre, 100, 10) {
 }
 
-void MagoHielo::atacar(Entidad& objetivo) const {
+void MagoHielo::atacar(Entidad& objetivo) {
     std::cout << nombre << " lanza un fragmento de hielo a " << objetivo.getNombre() << "\n";
     objetivo.recibirDanio(ataque, "hielo");
 }
