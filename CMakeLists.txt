@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(AventuraDelMago)
+project(Proyecto__POO)
 set(CMAKE_CXX_STANDARD 17)
-file(GLOB FUENTES *.cpp)
-add_executable(AventuraDelMago ${FUENTES})
+file(GLOB FUENTES src/*.cpp)
+add_executable(Proyecto__POO ${FUENTES})
