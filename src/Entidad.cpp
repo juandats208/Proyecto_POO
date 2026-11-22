@@ -14,9 +14,10 @@ Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
 void Entidad::recibirDanio(int cantidad, std::string tipo) {
     if (cantidad <= 0) {
         std::cout << "El daño no puede ser negativo o igual a 0 \n";
+        return;
     }
     vidaAct -= cantidad;
-    if (vidaAct - cantidad < 0) {
+    if (vidaAct < 0) {
         vidaAct = 0;
     }
 }
@@ -32,6 +33,7 @@ bool Entidad::estaVivo() const {
     if (vidaAct > 0) {
         return true;
     }
+    return false;
 }
 
 void Entidad::congelar() {
