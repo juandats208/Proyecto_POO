@@ -7,7 +7,7 @@ MagoRayo::MagoRayo(const std::string& nombre)
     this -> probCritico = 25;
 }
 
-void MagoRayo::atacar(Entidad& objetivo) const {
+void MagoRayo::atacar(Entidad& objetivo) {
     std::cout << nombre << " lanza una chispa a " << objetivo.getNombre() << "\n";
     objetivo.recibirDanio(ataque, "rayo");
 }
