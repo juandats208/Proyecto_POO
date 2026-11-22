@@ -15,7 +15,7 @@ public:
 
     //Metodos
 
-    void atacar(Entidad& objetivo) const override;
+    void atacar(Entidad& objetivo) override;
     void ataqueFuerte(Entidad& objetivo) override;
     void habilidadEspecial(Entidad& objetivo) override;
 
