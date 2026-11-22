@@ -11,6 +11,10 @@ Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
     this -> turnosQuemado = 0;
 }
 
+Entidad::~Entidad() {
+
+}
+
 void Entidad::recibirDanio(int cantidad, std::string tipo) {
     if (cantidad <= 0) {
         std::cout << "El daño no puede ser negativo o igual a 0 \n";
@@ -76,4 +80,27 @@ bool Entidad::procesarEstados() {
     }
 
     return true;
+}
+
+void Entidad::subirAtaque(int cantidad) {
+    if (cantidad <= 0) {
+        std::cout << "La cantidad debe ser mayor que 0 \n";
+    }
+    ataque += cantidad;
+}
+
+int Entidad::getAtaque() const {
+    return ataque;
+}
+
+std::string Entidad::getNombre() const {
+    return nombre;
+}
+
+int Entidad::getVidaAct() const {
+    return vidaAct;
+}
+
+int Entidad::getVidaMax() const {
+    return vidaMax;
 }
