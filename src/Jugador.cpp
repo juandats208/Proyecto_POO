@@ -6,7 +6,7 @@ Jugador::Jugador(const std::string& nombre, int vida, int ataque)
     this -> recargaEspecial = 0;
 }
 
-void Jugador::atacar(Entidad& objetivo) const {
+void Jugador::atacar(Entidad& objetivo) {
     std::cout << nombre << " golpea con su baston a " << objetivo.getNombre() << "\n";
     objetivo.recibirDanio(ataque, "normal");
 }
