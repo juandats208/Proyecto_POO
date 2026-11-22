@@ -2,7 +2,6 @@
 #define Habitacion_H
 #include <string>
 #include <vector>
-#include <map>
 #include "Entidad.h"
 #include "Objeto.h"
 #include "Jugador.h"
@@ -15,7 +14,8 @@ private:
     std::string efectoAmbiente;
     std::vector<Entidad*> enemigos;
     std::vector<Objeto> objetos;
-    std::map<std::string, Habitacion*> salidas;
+    Habitacion* adelante;
+    Habitacion* atras;
     bool salidaBloqueada;
 
 public:

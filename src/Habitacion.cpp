@@ -7,6 +7,8 @@ Habitacion::Habitacion(const std::string& nombre, const std::string& descripcion
     this -> descripcion = descripcion;
     this -> efectoAmbiente = efecto;
     this -> salidaBloqueada = false;
+    this -> adelante = nullptr;
+    this -> atras = nullptr;
 }
 
 Habitacion::~Habitacion() {
@@ -25,7 +27,11 @@ void Habitacion::agregarObjeto(Objeto obj) {
 }
 
 void Habitacion::agregarSalida(const std::string& direccion, Habitacion* h) {
-    salidas[direccion] = h;
+    if (direccion == "adelante") {
+        adelante = h;
+    } else if (direccion == "atras") {
+        atras = h;
+    }
 }
 
 void Habitacion::mostrar() const {
@@ -33,11 +39,13 @@ void Habitacion::mostrar() const {
     std::cout << descripcion << "\n";
 
     std::cout << "Salidas: ";
-    for (auto par : salidas) {
-        std::cout << par.first << " (" << par.second -> getNombre() << ")  ";
+    if (atras != nullptr) {
+        std::cout << "atras (" << atras -> getNombre() << ")  ";
     }
-    std::cout << "
-";
+    if (adelante != nullptr) {
+        std::cout << "adelante (" << adelante -> getNombre() << ")";
+    }
+    std::cout << "\n";
 }
 
 bool Habitacion::hayEnemigosVivos() const {
@@ -59,17 +67,18 @@ Entidad* Habitacion::getEnemigo() const {
 }
 
 Habitacion* Habitacion::getSalida(const std::string& direccion) const {
-    if (salidaBloqueada == true) {
-        std::cout << "La salida esta bloqueada 
-";
-        return nullptr;
+    if (direccion == "atras" && atras != nullptr) {
+        return atras;
     }
-    if (salidas.count(direccion) == 0) {
-        std::cout << "No hay salida por ahi 
-";
-        return nullptr;
+    if (direccion == "adelante" && adelante != nullptr) {
+        if (salidaBloqueada == true) {
+            std::cout << "La salida esta bloqueada \n";
+            return nullptr;
+        }
+        return adelante;
     }
-    return salidas.at(direccion);
+    std::cout << "No hay salida por ahi \n";
+    return nullptr;
 }
 
 void Habitacion::desbloquear() {
