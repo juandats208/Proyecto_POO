@@ -43,7 +43,12 @@ bool Esfinge::lanzarAcertijo(Entidad& objetivo) {
     std::cout << "La Esfinge te lanza un acertijo: \n";
     std::cout << preguntas[i] << "\n";
     std::cout << "Tu respuesta: ";
-    std::cin >> respuesta;
+
+    while (!(std::cin >> respuesta)) {
+        std::cout << "Error: solo puedes ingresar el numero de la opcion (1, 2 o 3): ";
+        std::cin.clear();
+        std::cin.ignore(1000, '\n');
+    }
 
     if (respuesta == respuestas[i]) {
         return true;
