@@ -23,6 +23,7 @@ public:
     virtual void ataqueFuerte(Entidad& objetivo);
     virtual void habilidadEspecial(Entidad& objetivo);
     bool puedeUsarEspecial() const;
+    int getRecargaEspecial() const;
     void reducirRecarga();
     void agregarObjeto(Objeto obj);
     void mostrarInventario() const;
