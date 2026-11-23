@@ -20,14 +20,16 @@ int leerNumero() {
     return numero;
 }
 
+
+
 void mostrarBienvenida() {
     std::cout << "==============================================\n";
-    std::cout << "        BIENVENIDO A LA AVENTURA DEL MAGO     \n";
+    std::cout << "        BIENVENIDX AL CUENTO DEL ARCANO   \n";
     std::cout << "==============================================\n\n";
 
     std::cout << "Eres un joven mago que debe atravesar tres lugares\n";
     std::cout << "llenos de criaturas legendarias. En cada habitacion\n";
-    std::cout << "te espera un enemigo: si lo vences, la salida se abre\n";
+    std::cout << "te espera un enemigo y si logras vencerlo, la salida se abre\n";
     std::cout << "y puedes pasar a la siguiente. Si derrotas a la Hidra\n";
     std::cout << "de Lerna, ganas el juego.\n\n";
 
@@ -51,8 +53,7 @@ void mostrarBienvenida() {
     std::cout << "  El mas fragil, pero el que mas dano puede hacer.\n";
     std::cout << "  - Ataque debil: una chispa.\n";
     std::cout << "  - Ataque fuerte: relampago con dano variable.\n";
-    std::cout << "  - Especial: tormenta con probabilidad de golpe critico\n";
-    std::cout << "    (doble de dano).\n\n";
+    std::cout << "  - Especial: tormenta con probabilidad de golpe critico\n\n";
 
     std::cout << "EXPERIENCIA Y NIVELES:\n";
     std::cout << "  Cada enemigo que vences te da experiencia (XP).\n";
@@ -62,8 +63,8 @@ void mostrarBienvenida() {
 
     std::cout << "COMO SE DESBLOQUEAN LOS ATAQUES:\n";
     std::cout << "  - Ataque fuerte: despues de 2 ataques debiles.\n";
-    std::cout << "  - Habilidad especial: despues de 1 ataque debil y 1 fuerte.\n";
-    std::cout << "  Combo ideal: debil -> debil -> fuerte -> ESPECIAL\n\n";
+    std::cout << "  - Habilidad especial: despues de 1 ataque debil y 1 fuerte.\n\n";
+
 
     std::cout << "-------------- LOS ENEMIGOS --------------\n\n";
 
@@ -98,7 +99,7 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
 
     while (jugador -> estaVivo() && enemigo -> estaVivo()) {
 
-        // ----- Turno del jugador -----
+        //Turno del jugador
         mostrarVidas(jugador, enemigo);
 
         if (jugador -> procesarEstados() == true) {
@@ -152,14 +153,14 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
             break;
         }
 
-        // ----- Turno del enemigo -----
+        // Turno del enemigo
         if (enemigo -> procesarEstados() == true) {
             enemigo -> atacar(*jugador);
         } else if (enemigo -> estaVivo()) {
             std::cout << enemigo -> getNombre() << " pierde su turno\n";
         }
 
-        // Efecto de ambiente por turno (el calor de Tebas)
+        // Efecto de ambiente en el calor de Tebas
         if (actual -> getEfecto() == "calor") {
             actual -> aplicarEfecto(jugador);
         }
@@ -236,7 +237,7 @@ bool cargarPartida(Jugador*& jugador, int& tipo, Habitacion* mapa[], Habitacion*
 int main() {
     srand(time(0));
 
-    // ----- Crear el mapa -----
+    // MAPA
     Habitacion* santuario = new Habitacion("Santuario de los Mil Torii",
         "Un camino de cientos de arcos rojos que suben por una montana.\nEstatuas de zorros de piedra te miran desde ambos lados.",
         "proteccion");
@@ -262,7 +263,7 @@ int main() {
 
     Habitacion* mapa[3] = {santuario, tebas, pantano};
 
-    // ----- Bienvenida: nueva partida o cargar -----
+    // Bienvenida: nueva partida o cargar
     mostrarBienvenida();
 
     Jugador* jugador = nullptr;
@@ -298,7 +299,7 @@ int main() {
         std::cout << "\nBuena suerte, " << nombre << ". Tu aventura comienza...\n";
     }
 
-    // ----- Ciclo principal -----
+    // Ciclo principal
     bool terminado = false;
 
     while (terminado == false) {
@@ -319,6 +320,7 @@ int main() {
             jugador -> ganarExperiencia(enemigo -> getRecompensaExp());
 
             std::vector<Objeto> encontrados = actual -> entregarObjetos();
+
             for (int i = 0; i < encontrados.size(); i++) {
                 std::cout << "Has obtenido: " << encontrados[i].getNombre() << "\n";
                 jugador -> agregarObjeto(encontrados[i]);
@@ -333,7 +335,7 @@ int main() {
             }
         }
 
-        // ----- Menu entre habitaciones -----
+        // Menu Entre Habitaciones
         bool decidido = false;
         while (decidido == false) {
             std::cout << "\nQue quieres hacer?\n";
@@ -382,7 +384,6 @@ int main() {
         }
     }
 
-    // ----- Liberar memoria -----
     delete jugador;
     delete santuario;
     delete tebas;

@@ -1,5 +1,4 @@
 #include "Habitacion.h"
-#include "MagoHielo.h"
 #include <iostream>
 
 Habitacion::Habitacion(const std::string& nombre, const std::string& descripcion, const std::string& efecto) {
@@ -96,7 +95,7 @@ void Habitacion::aplicarEfecto(Jugador* j) {
         std::cout << "El aire del pantano te envenena \n";
         j -> envenenar(3);
     } else if (efectoAmbiente == "calor") {
-        if (dynamic_cast<MagoHielo*>(j) != nullptr) {
+        if (j -> resisteCalor()) {
             std::cout << "Tu dominio del frio te protege del calor \n";
         } else {
             std::cout << "El calor del desierto te quema \n";

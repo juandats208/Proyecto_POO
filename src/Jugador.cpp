@@ -116,15 +116,20 @@ void Jugador::usarObjeto(int indice) {
 
     Objeto obj = inventario[posicion];
 
+    std::cout << "Usaste " << obj.getNombre() << "\n";
+
     if (obj.getTipo() == "curacion") {
+        int vidaAntes = vidaAct;
         curar(obj.getValor());
+        std::cout << "Te curaste " << vidaAct - vidaAntes << " de vida (" << vidaAct << "/" << vidaMax << ")\n";
     } else if (obj.getTipo() == "ataque") {
         subirAtaque(obj.getValor());
+        std::cout << "Tu ataque subio a " << ataque << "\n";
     } else if (obj.getTipo() == "antidoto") {
         quitarEstados();
+        std::cout << "Ya no estas envenenado ni quemado\n";
     }
 
-    std::cout << "Usaste " << obj.getNombre() << "\n";
     inventario.erase(inventario.begin() + posicion);
 }
 

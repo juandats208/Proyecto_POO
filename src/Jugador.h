@@ -10,9 +10,9 @@ class Jugador : public Entidad {
 protected:
 
     std::vector<Objeto> inventario;
-    int debilesSeguidos;   // ataques debiles desde el ultimo fuerte
-    bool usoDebil;         // uso un ataque debil desde la ultima especial
-    bool usoFuerte;        // uso un ataque fuerte desde la ultima especial
+    int debilesSeguidos;   // -> ataques debiles desde el ultimo fuerte
+    bool usoDebil;         // -> uso un ataque debil desde la ultima especial
+    bool usoFuerte;        // -> uso un ataque fuerte desde la ultima especial
     int nivel;
     int experiencia;
     int expParaSubir;
@@ -28,13 +28,14 @@ public:
 
     Jugador(const std::string& nombre, int vida, int ataque);
 
-    //Ataques (cada mago los sobrescribe)
+    //Ataques
 
+    virtual bool resisteCalor() const { return false; }
     void atacar(Entidad& objetivo) override;
     virtual void ataqueFuerte(Entidad& objetivo);
     virtual void habilidadEspecial(Entidad& objetivo);
 
-    //Lo que se llama desde el combate (lleva la cuenta de los combos)
+    //Lo que se llama desde el combate
 
     void usarAtaqueDebil(Entidad& objetivo);
     void usarAtaqueFuerte(Entidad& objetivo);
