@@ -168,3 +168,43 @@ int Jugador::getExperiencia() const {
 int Jugador::getExpParaSubir() const {
     return expParaSubir;
 }
+
+void Jugador::guardar(std::ofstream& archivo) const {
+    archivo << vidaAct << " " << vidaMax << " " << ataque << "\n";
+    archivo << nivel << " " << experiencia << " " << expParaSubir << "\n";
+    archivo << turnosQuemado << " " << turnosEnvenenado << "\n";
+
+    archivo << inventario.size() << "\n";
+    for (int i = 0; i < inventario.size(); i++) {
+        archivo << inventario[i].getNombre() << "\n";
+        archivo << inventario[i].getDescripcion() << "\n";
+        archivo << inventario[i].getTipo() << "\n";
+        archivo << inventario[i].getValor() << "\n";
+    }
+}
+
+void Jugador::cargar(std::ifstream& archivo) {
+    archivo >> vidaAct >> vidaMax >> ataque;
+    archivo >> nivel >> experiencia >> expParaSubir;
+    archivo >> turnosQuemado >> turnosEnvenenado;
+
+    int cantidad;
+    archivo >> cantidad;
+    archivo.ignore();
+
+    inventario.clear();
+    for (int i = 0; i < cantidad; i++) {
+        std::string nombreObj;
+        std::string descripcion;
+        std::string tipo;
+        int valor;
+
+        std::getline(archivo, nombreObj);
+        std::getline(archivo, descripcion);
+        std::getline(archivo, tipo);
+        archivo >> valor;
+        archivo.ignore();
+
+        inventario.push_back(Objeto(nombreObj, descripcion, tipo, valor));
+    }
+}

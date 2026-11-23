@@ -112,3 +112,12 @@ std::string Habitacion::getNombre() const {
 std::string Habitacion::getEfecto() const {
     return efectoAmbiente;
 }
+
+void Habitacion::marcarSuperada() {
+    for (int i = 0; i < enemigos.size(); i++) {
+        delete enemigos[i];
+    }
+    enemigos.clear();
+    objetos.clear();
+    salidaBloqueada = false;
+}

@@ -2,6 +2,7 @@
 #define Jugador_H
 #include <string>
 #include <vector>
+#include <fstream>
 #include "Entidad.h"
 #include "Objeto.h"
 
@@ -49,6 +50,11 @@ public:
     int getNivel() const;
     int getExperiencia() const;
     int getExpParaSubir() const;
+
+    //Guardar y cargar partida
+
+    void guardar(std::ofstream& archivo) const;
+    void cargar(std::ifstream& archivo);
 
     //Inventario
 
