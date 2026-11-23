@@ -17,8 +17,9 @@ void MagoFuego::ataqueFuerte(Entidad& objetivo) {
 }
 
 void MagoFuego::habilidadEspecial(Entidad& objetivo) {
+    std::cout << "*** HABILIDAD ESPECIAL: LLAMAS ETERNAS ***\n";
     std::cout << nombre << " prende en llamas a " << objetivo.getNombre() << "\n";
     objetivo.recibirDanio(ataque, "fuego");
     objetivo.quemar(turnosQuemadura);
-    recargaEspecial = 3;
+    std::cout << objetivo.getNombre() << " se quemara y perdera vida durante " << turnosQuemadura << " turnos!\n";
 }
