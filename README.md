@@ -23,4 +23,5 @@ g++ *.cpp -o juego
 - Persistencia: guardar y cargar partida en partida.txt
 
 ## Integrantes
-- (nombres)
+- Catalina Guerrero Cabrera
+- Juan David Emmanuel Tovar Córdoba
