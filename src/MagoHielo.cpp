@@ -16,7 +16,8 @@ void MagoHielo::ataqueFuerte(Entidad& objetivo) {
 }
 
 void MagoHielo::habilidadEspecial(Entidad& objetivo) {
+    std::cout << "*** HABILIDAD ESPECIAL: PRISION DE HIELO ***\n";
     std::cout << nombre << " congela a " << objetivo.getNombre() << "\n";
     objetivo.congelar();
-    recargaEspecial = 3;
+    std::cout << objetivo.getNombre() << " queda congelado y pierde su siguiente turno!\n";
 }
