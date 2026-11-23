@@ -21,6 +21,7 @@ public:
     //Metodos
 
     void atacar(Entidad& objetivo) override;
+    int getRecompensaExp() const override;
 
 };
 
