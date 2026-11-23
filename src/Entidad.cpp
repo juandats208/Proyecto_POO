@@ -1,6 +1,8 @@
 #include "Entidad.h"
 #include <iostream>
 
+//Constructor
+
 Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
     this -> vidaAct = vida;
     this -> vidaMax = vida;
@@ -11,6 +13,8 @@ Entidad::Entidad(const std::string &nombre, int vida, int ataque) {
     this -> turnosQuemado = 0;
 }
 
+//Destructor
+
 Entidad::~Entidad() {
 
     std::cout << nombre << " fue eliminado \n";
@@ -19,7 +23,7 @@ Entidad::~Entidad() {
 
 void Entidad::recibirDanio(int cantidad, std::string tipo) {
     if (cantidad <= 0) {
-        std::cout << "El daño no puede ser negativo o igual a 0 \n";
+        std::cout << "El dano no puede ser negativo o igual a 0 \n";
         return;
     }
     vidaAct -= cantidad;
@@ -29,6 +33,10 @@ void Entidad::recibirDanio(int cantidad, std::string tipo) {
 }
 
 void Entidad::curar(int cantidad) {
+    if (cantidad <= 0) {
+        std::cout << "La curacion no puede ser negativo o igual a 0 \n";
+        return;
+    }
     vidaAct += cantidad;
     if (vidaAct > vidaMax) {
         vidaAct = vidaMax;

@@ -36,27 +36,29 @@ void Esfinge::atacar(Entidad& objetivo) {
     }
 }
 
-bool Esfinge::lanzarAcertijo(Entidad& objetivo) {
-    int i = rand() % preguntas.size();
-    int respuesta;
 
-    std::cout << "La Esfinge te lanza un acertijo: \n";
-    std::cout << preguntas[i] << "\n";
-    std::cout << "Tu respuesta: ";
+bool Esfinge::lanzarAcertijo(Entidad& objetivo){
 
-    while (!(std::cin >> respuesta)) {
-        std::cout << "Error: solo puedes ingresar el numero de la opcion (1, 2 o 3): ";
-        std::cin.clear();
-        std::cin.ignore(1000, '\n');
-    }
+        int i = rand() % preguntas.size();
+        int respuesta;
 
-    if (respuesta == respuestas[i]) {
-        return true;
-    }
+        std::cout << "La Esfinge te lanza un acertijo: \n";
+        std::cout << preguntas[i] << "\n";
+        std::cout << "Tu respuesta: ";
 
-    std::cout << "Incorrecto! La Esfinge te escupe fuego \n";
-    objetivo.recibirDanio(ataque * 2, "fuego");
-    return false;
+        while (!(std::cin >> respuesta)) {
+            std::cout << "Error: solo puedes ingresar el numero de la opcion (1, 2 o 3): ";
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+        }
+
+        if (respuesta == respuestas[i]) {
+            return true;
+        }
+
+        std::cout << "Incorrecto! La Esfinge te escupe fuego \n";
+        objetivo.recibirDanio(ataque * 2, "fuego");
+        return false;
 }
 
 int Esfinge::getRecompensaExp() const {
