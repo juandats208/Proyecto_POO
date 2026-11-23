@@ -23,3 +23,7 @@ void Kitsune::recibirDanio(int cantidad, std::string tipo) {
     }
     Entidad::recibirDanio(cantidad, tipo);
 }
+
+int Kitsune::getRecompensaExp() const {
+    return 100;
+}
