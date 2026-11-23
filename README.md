@@ -3,14 +3,14 @@
 Proyecto Final de Programacion Orientada a Objetos 2026-2
 Pontificia Universidad Javeriana Cali
 
-## Descripcion
+## Descripción
 Juego de rol por consola en C++. Escoges un mago (fuego, hielo o rayo)
 y atraviesas tres habitaciones enfrentando al Kitsune, la Esfinge y la
 Hidra de Lerna. Cada enemigo vencido da experiencia para subir de nivel,
 y la partida se puede guardar y cargar desde un archivo de texto.
 
-## Como compilar
-g++ *.cpp -o juego
+## ¿Cómo compilar?
+g++ src/*.cpp -o juego
 ./juego
 
 ## Conceptos de POO usados
