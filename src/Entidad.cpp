@@ -107,3 +107,7 @@ int Entidad::getVidaAct() const {
 int Entidad::getVidaMax() const {
     return vidaMax;
 }
+
+int Entidad::getRecompensaExp() const {
+    return 0;
+}
