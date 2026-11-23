@@ -38,6 +38,7 @@ public:
     Entidad* getEnemigo() const;
     Habitacion* getSalida(const std::string& direccion) const;
     void desbloquear();
+    void marcarSuperada();
     std::vector<Objeto> entregarObjetos();
     void aplicarEfecto(Jugador* j);
 
