@@ -75,3 +75,7 @@ bool Jugador::tieneObjetos() const {
     }
     return false;
 }
+
+int Jugador::getRecargaEspecial() const {
+    return recargaEspecial;
+}
