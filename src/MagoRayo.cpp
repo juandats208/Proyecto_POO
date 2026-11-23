@@ -19,14 +19,16 @@ void MagoRayo::ataqueFuerte(Entidad& objetivo) {
 }
 
 void MagoRayo::habilidadEspecial(Entidad& objetivo) {
+    std::cout << "*** HABILIDAD ESPECIAL: TORMENTA ***\n";
     int danio = ataque;
 
     if (rand() % 100 < probCritico) {
         danio = danio * 2;
-        std::cout << "Golpe critico! ";
+        std::cout << "GOLPE CRITICO! El rayo hace el doble de dano\n";
+    } else {
+        std::cout << "Esta vez no hubo critico\n";
     }
 
-    std::cout << nombre << " lanza una tormenta sobre " << objetivo.getNombre() << "\n";
+    std::cout << nombre << " lanza una tormenta sobre " << objetivo.getNombre() << " (" << danio << " de dano)\n";
     objetivo.recibirDanio(danio, "rayo");
-    recargaEspecial = 3;
 }
