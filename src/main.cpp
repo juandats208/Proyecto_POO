@@ -32,21 +32,21 @@ void mostrarBienvenida() {
 
     std::cout << "--------------- LOS MAGOS ---------------\n\n";
 
-    std::cout << "MAGO DE FUEGO  (Vida: 90 | Ataque: 12)\n";
+    std::cout << "MAGO DE FUEGO  (Vida: 120 | Ataque: 12)\n";
     std::cout << "  El mas equilibrado de los tres.\n";
     std::cout << "  - Ataque debil: una pequena llamarada.\n";
     std::cout << "  - Ataque fuerte: bola de fuego, doble de dano.\n";
     std::cout << "  - Especial: prende en llamas al enemigo, que pierde\n";
     std::cout << "    vida durante 3 turnos.\n\n";
 
-    std::cout << "MAGO DE HIELO  (Vida: 100 | Ataque: 10)\n";
+    std::cout << "MAGO DE HIELO  (Vida: 140 | Ataque: 11)\n";
     std::cout << "  El mas resistente, pero el que menos dano hace.\n";
     std::cout << "  No le afecta el calor del desierto.\n";
     std::cout << "  - Ataque debil: fragmento de hielo.\n";
     std::cout << "  - Ataque fuerte: lanza de escarcha.\n";
     std::cout << "  - Especial: congela al enemigo y le hace perder un turno.\n\n";
 
-    std::cout << "MAGO DE RAYO  (Vida: 80 | Ataque: 15)\n";
+    std::cout << "MAGO DE RAYO  (Vida: 100 | Ataque: 15)\n";
     std::cout << "  El mas fragil, pero el que mas dano puede hacer.\n";
     std::cout << "  - Ataque debil: una chispa.\n";
     std::cout << "  - Ataque fuerte: relampago con dano variable.\n";
@@ -226,6 +226,10 @@ int main() {
 
             std::cout << "\n*** Felicidades! Superaste " << actual -> getNombre() << " ***\n";
             actual -> desbloquear();
+
+            jugador -> curar(jugador -> getVidaMax());
+            std::cout << "Descansas un momento y recuperas toda tu vida ("
+                      << jugador -> getVidaAct() << "/" << jugador -> getVidaMax() << ")\n";
 
             std::vector<Objeto> encontrados = actual -> entregarObjetos();
             for (int i = 0; i < encontrados.size(); i++) {
