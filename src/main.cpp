@@ -53,7 +53,10 @@ void mostrarBienvenida() {
     std::cout << "  - Especial: tormenta con probabilidad de golpe critico\n";
     std::cout << "    (doble de dano).\n\n";
 
-    std::cout << "La habilidad especial tarda 3 turnos en recargarse.\n\n";
+    std::cout << "COMO SE DESBLOQUEAN LOS ATAQUES:\n";
+    std::cout << "  - Ataque fuerte: despues de 2 ataques debiles.\n";
+    std::cout << "  - Habilidad especial: despues de 1 ataque debil y 1 fuerte.\n";
+    std::cout << "  Combo ideal: debil -> debil -> fuerte -> ESPECIAL\n\n";
 
     std::cout << "-------------- LOS ENEMIGOS --------------\n\n";
 
@@ -90,22 +93,16 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
         // ----- Turno del jugador -----
         mostrarVidas(jugador, enemigo);
 
-        if (jugador -> getRecargaEspecial() == 1) {
-            std::cout << "*** Tu habilidad especial esta lista! ***\n";
-        }
-        jugador -> reducirRecarga();
-
         if (jugador -> procesarEstados() == true) {
             bool accionHecha = false;
 
             while (accionHecha == false) {
                 std::cout << "1. Ataque debil\n";
-                std::cout << "2. Ataque fuerte\n";
-                if (jugador -> puedeUsarEspecial()) {
-                    std::cout << "3. Habilidad especial (lista!)\n";
-                } else {
-                    std::cout << "3. Habilidad especial (recargando: faltan " << jugador -> getRecargaEspecial() << " turnos)\n";
-                }
+                std::cout << "2. Ataque fuerte ";
+                jugador -> mostrarProgresoFuerte();
+                std::cout << "\n3. Habilidad especial ";
+                jugador -> mostrarProgresoEspecial();
+                std::cout << "\n";
                 if (jugador -> tieneObjetos()) {
                     std::cout << "4. Usar objeto\n";
                 }
@@ -113,19 +110,21 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
                 int opcion = leerNumero();
 
                 if (opcion == 1) {
-                    jugador -> atacar(*enemigo);
+                    jugador -> usarAtaqueDebil(*enemigo);
                     accionHecha = true;
                 } else if (opcion == 2) {
-                    jugador -> ataqueFuerte(*enemigo);
-                    accionHecha = true;
-                } else if (opcion == 3) {
-                    if (jugador -> puedeUsarEspecial()) {
-                        jugador -> habilidadEspecial(*enemigo);
-                        std::cout << "(Tu habilidad especial se recarga en 3 turnos)\n";
+                    if (jugador -> puedeUsarFuerte()) {
+                        jugador -> usarAtaqueFuerte(*enemigo);
                         accionHecha = true;
                     } else {
-                        std::cout << "Tu habilidad especial todavia se esta recargando. Faltan "
-                                  << jugador -> getRecargaEspecial() << " turnos. Escoge otra opcion.\n\n";
+                        std::cout << "El ataque fuerte esta bloqueado. Primero haz 2 ataques debiles.\n\n";
+                    }
+                } else if (opcion == 3) {
+                    if (jugador -> puedeUsarEspecial()) {
+                        jugador -> usarHabilidadEspecial(*enemigo);
+                        accionHecha = true;
+                    } else {
+                        std::cout << "La habilidad especial esta bloqueada. Necesitas 1 ataque debil y 1 fuerte.\n\n";
                     }
                 } else if (opcion == 4 && jugador -> tieneObjetos()) {
                     jugador -> mostrarInventario();
