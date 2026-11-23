@@ -3,7 +3,9 @@
 
 Jugador::Jugador(const std::string& nombre, int vida, int ataque)
     : Entidad(nombre, vida, ataque) {
-    this -> recargaEspecial = 0;
+    this -> debilesSeguidos = 0;
+    this -> usoDebil = false;
+    this -> usoFuerte = false;
 }
 
 void Jugador::atacar(Entidad& objetivo) {
@@ -17,19 +19,73 @@ void Jugador::ataqueFuerte(Entidad& objetivo) {
 
 void Jugador::habilidadEspecial(Entidad& objetivo) {
     atacar(objetivo);
-    recargaEspecial = 3;
 }
 
-bool Jugador::puedeUsarEspecial() const {
-    if (recargaEspecial == 0) {
+void Jugador::usarAtaqueDebil(Entidad& objetivo) {
+    bool especialAntes = puedeUsarEspecial();
+
+    atacar(objetivo);
+    debilesSeguidos++;
+    usoDebil = true;
+
+    if (debilesSeguidos == 2) {
+        std::cout << "*** Ataque fuerte desbloqueado! ***\n";
+    }
+    if (especialAntes == false && puedeUsarEspecial() == true) {
+        std::cout << "*** Habilidad especial desbloqueada! ***\n";
+    }
+}
+
+void Jugador::usarAtaqueFuerte(Entidad& objetivo) {
+    bool especialAntes = puedeUsarEspecial();
+
+    ataqueFuerte(objetivo);
+    debilesSeguidos = 0;
+    usoFuerte = true;
+
+    if (especialAntes == false && puedeUsarEspecial() == true) {
+        std::cout << "*** Habilidad especial desbloqueada! ***\n";
+    }
+}
+
+void Jugador::usarHabilidadEspecial(Entidad& objetivo) {
+    habilidadEspecial(objetivo);
+    usoDebil = false;
+    usoFuerte = false;
+}
+
+bool Jugador::puedeUsarFuerte() const {
+    if (debilesSeguidos >= 2) {
         return true;
     }
     return false;
 }
 
-void Jugador::reducirRecarga() {
-    if (recargaEspecial > 0) {
-        recargaEspecial--;
+bool Jugador::puedeUsarEspecial() const {
+    if (usoDebil == true && usoFuerte == true) {
+        return true;
+    }
+    return false;
+}
+
+void Jugador::mostrarProgresoFuerte() const {
+    if (puedeUsarFuerte()) {
+        std::cout << "(listo!)";
+    } else {
+        int faltan = 2 - debilesSeguidos;
+        std::cout << "(bloqueado: haz " << faltan << " ataque(s) debil(es) mas)";
+    }
+}
+
+void Jugador::mostrarProgresoEspecial() const {
+    if (puedeUsarEspecial()) {
+        std::cout << "(lista!)";
+    } else if (usoDebil == false && usoFuerte == false) {
+        std::cout << "(bloqueada: haz 1 ataque debil y 1 fuerte)";
+    } else if (usoDebil == false) {
+        std::cout << "(bloqueada: te falta 1 ataque debil)";
+    } else {
+        std::cout << "(bloqueada: te falta 1 ataque fuerte)";
     }
 }
 
@@ -74,8 +130,4 @@ bool Jugador::tieneObjetos() const {
         return true;
     }
     return false;
-}
-
-int Jugador::getRecargaEspecial() const {
-    return recargaEspecial;
 }
