@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #include "Habitacion.h"
 #include "MagoFuego.h"
 #include "MagoHielo.h"
@@ -83,7 +84,8 @@ void mostrarBienvenida() {
     std::cout << "  El aire del pantano te envenena al entrar.\n\n";
 
     std::cout << "Mientras exploras puedes encontrar objetos que te curan,\n";
-    std::cout << "suben tu ataque o quitan el veneno.\n\n";
+    std::cout << "suben tu ataque o quitan el veneno.\n";
+    std::cout << "Entre habitaciones puedes guardar tu partida.\n\n";
 }
 
 void mostrarVidas(Jugador* jugador, Entidad* enemigo) {
@@ -166,6 +168,71 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
     return jugador -> estaVivo();
 }
 
+void guardarPartida(Jugador* jugador, int tipo, Habitacion* mapa[], Habitacion* actual) {
+    std::ofstream archivo("partida.txt");
+
+    if (!archivo.is_open()) {
+        std::cout << "Error: no se pudo guardar la partida\n";
+        return;
+    }
+
+    int indiceActual = 0;
+    int superadas = 0;
+    for (int i = 0; i < 3; i++) {
+        if (mapa[i] == actual) {
+            indiceActual = i;
+        }
+        if (mapa[i] -> hayEnemigosVivos() == false) {
+            superadas++;
+        }
+    }
+
+    archivo << tipo << "\n";
+    archivo << jugador -> getNombre() << "\n";
+    jugador -> guardar(archivo);
+    archivo << indiceActual << " " << superadas << "\n";
+
+    archivo.close();
+    std::cout << "Partida guardada en partida.txt\n";
+}
+
+bool cargarPartida(Jugador*& jugador, int& tipo, Habitacion* mapa[], Habitacion*& actual) {
+    std::ifstream archivo("partida.txt");
+
+    if (!archivo.is_open()) {
+        std::cout << "No hay ninguna partida guardada.\n";
+        return false;
+    }
+
+    std::string nombre;
+    archivo >> tipo;
+    archivo.ignore();
+    std::getline(archivo, nombre);
+
+    if (tipo == 2) {
+        jugador = new MagoHielo(nombre);
+    } else if (tipo == 3) {
+        jugador = new MagoRayo(nombre);
+    } else {
+        jugador = new MagoFuego(nombre);
+    }
+    jugador -> cargar(archivo);
+
+    int indiceActual;
+    int superadas;
+    archivo >> indiceActual >> superadas;
+
+    for (int i = 0; i < superadas; i++) {
+        mapa[i] -> marcarSuperada();
+    }
+    actual = mapa[indiceActual];
+
+    archivo.close();
+    std::cout << "\nPartida cargada. Bienvenido de vuelta, " << nombre
+              << " (Nivel " << jugador -> getNivel() << ")\n";
+    return true;
+}
+
 int main() {
     srand(time(0));
 
@@ -193,29 +260,45 @@ int main() {
     tebas -> agregarSalida("adelante", pantano);
     pantano -> agregarSalida("atras", tebas);
 
-    // ----- Bienvenida y elegir mago -----
+    Habitacion* mapa[3] = {santuario, tebas, pantano};
+
+    // ----- Bienvenida: nueva partida o cargar -----
     mostrarBienvenida();
 
-    std::string nombre;
-    std::cout << "Como te llamas? ";
-    std::getline(std::cin, nombre);
-
-    std::cout << "\nEscoge tu mago:\n1. Fuego\n2. Hielo\n3. Rayo\nOpcion: ";
-    int tipo = leerNumero();
-
     Jugador* jugador = nullptr;
-    if (tipo == 2) {
-        jugador = new MagoHielo(nombre);
-    } else if (tipo == 3) {
-        jugador = new MagoRayo(nombre);
-    } else {
-        jugador = new MagoFuego(nombre);
+    Habitacion* actual = santuario;
+    int tipo = 1;
+
+    std::cout << "1. Nueva partida\n2. Cargar partida\nOpcion: ";
+    int inicio = leerNumero();
+    std::cin.ignore(1000, '\n');
+
+    bool cargada = false;
+    if (inicio == 2) {
+        cargada = cargarPartida(jugador, tipo, mapa, actual);
     }
 
-    std::cout << "\nBuena suerte, " << nombre << ". Tu aventura comienza...\n";
+    if (cargada == false) {
+        std::string nombre;
+        std::cout << "\nComo te llamas? ";
+        std::getline(std::cin, nombre);
+
+        std::cout << "\nEscoge tu mago:\n1. Fuego\n2. Hielo\n3. Rayo\nOpcion: ";
+        tipo = leerNumero();
+
+        if (tipo == 2) {
+            jugador = new MagoHielo(nombre);
+        } else if (tipo == 3) {
+            jugador = new MagoRayo(nombre);
+        } else {
+            tipo = 1;
+            jugador = new MagoFuego(nombre);
+        }
+
+        std::cout << "\nBuena suerte, " << nombre << ". Tu aventura comienza...\n";
+    }
 
     // ----- Ciclo principal -----
-    Habitacion* actual = santuario;
     bool terminado = false;
 
     while (terminado == false) {
@@ -258,6 +341,8 @@ int main() {
             std::cout << "2. Volver a la habitacion anterior\n";
             std::cout << "3. Ver inventario\n";
             std::cout << "4. Usar un objeto\n";
+            std::cout << "5. Guardar partida\n";
+            std::cout << "6. Salir del juego\n";
             std::cout << "Opcion: ";
             int opcion = leerNumero();
 
@@ -277,6 +362,12 @@ int main() {
                 } else {
                     std::cout << "No tienes objetos\n";
                 }
+            } else if (opcion == 5) {
+                guardarPartida(jugador, tipo, mapa, actual);
+            } else if (opcion == 6) {
+                std::cout << "Hasta la proxima! (Si no guardaste, se pierde el progreso)\n";
+                decidido = true;
+                terminado = true;
             } else {
                 std::cout << "Opcion invalida\n";
             }
