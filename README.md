@@ -1,4 +1,4 @@
-# Aventura del Mago - RPG por texto
+# El cuento del arcano - RPG por texto
 
 Proyecto Final de Programacion Orientada a Objetos 2026-2
 Pontificia Universidad Javeriana Cali
