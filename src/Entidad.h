@@ -27,6 +27,7 @@ public:
     void quitarEstados();
     bool procesarEstados();
     void subirAtaque(int cantidad);
+    virtual int getRecompensaExp() const;
 
 
     //Constructor

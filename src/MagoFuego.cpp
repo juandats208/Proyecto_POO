@@ -2,7 +2,7 @@
 #include <iostream>
 
 MagoFuego::MagoFuego(const std::string& nombre)
-    : Jugador(nombre, 120, 12) {
+    : Jugador(nombre, 90, 12) {
     this -> turnosQuemadura = 3;
 }
 

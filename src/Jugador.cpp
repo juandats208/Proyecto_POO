@@ -6,6 +6,9 @@ Jugador::Jugador(const std::string& nombre, int vida, int ataque)
     this -> debilesSeguidos = 0;
     this -> usoDebil = false;
     this -> usoFuerte = false;
+    this -> nivel = 1;
+    this -> experiencia = 0;
+    this -> expParaSubir = 100;
 }
 
 void Jugador::atacar(Entidad& objetivo) {
@@ -130,4 +133,38 @@ bool Jugador::tieneObjetos() const {
         return true;
     }
     return false;
+}
+
+void Jugador::ganarExperiencia(int cantidad) {
+    experiencia += cantidad;
+    std::cout << "Ganaste " << cantidad << " de experiencia (" << experiencia << "/" << expParaSubir << " XP)\n";
+
+    while (experiencia >= expParaSubir) {
+        experiencia -= expParaSubir;
+        subirNivel();
+    }
+}
+
+void Jugador::subirNivel() {
+    nivel++;
+    expParaSubir += 50;
+    vidaMax += 10;
+    ataque += 2;
+    vidaAct = vidaMax;
+
+    std::cout << "\n*** SUBISTE A NIVEL " << nivel << "! ***\n";
+    std::cout << "Vida maxima: " << vidaMax << " | Ataque: " << ataque << "\n";
+    std::cout << "Recuperas toda tu vida.\n";
+}
+
+int Jugador::getNivel() const {
+    return nivel;
+}
+
+int Jugador::getExperiencia() const {
+    return experiencia;
+}
+
+int Jugador::getExpParaSubir() const {
+    return expParaSubir;
 }

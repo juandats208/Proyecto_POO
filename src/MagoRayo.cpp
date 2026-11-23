@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 MagoRayo::MagoRayo(const std::string& nombre)
-    : Jugador(nombre, 100, 15) {
+    : Jugador(nombre, 80, 15) {
     this -> probCritico = 25;
 }
 

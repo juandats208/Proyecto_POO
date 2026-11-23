@@ -58,3 +58,7 @@ bool Esfinge::lanzarAcertijo(Entidad& objetivo) {
     objetivo.recibirDanio(ataque * 2, "fuego");
     return false;
 }
+
+int Esfinge::getRecompensaExp() const {
+    return 150;
+}

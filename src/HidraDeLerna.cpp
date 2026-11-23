@@ -50,3 +50,7 @@ void HidraDeLerna::regenerar() {
 int HidraDeLerna::getCabezas() const {
     return cabezas;
 }
+
+int HidraDeLerna::getRecompensaExp() const {
+    return 200;
+}

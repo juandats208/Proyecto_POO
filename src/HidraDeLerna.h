@@ -18,6 +18,7 @@ public:
     //Metodos
 
     void atacar(Entidad& objetivo) override;
+    int getRecompensaExp() const override;
     void recibirDanio(int cantidad, std::string tipo) override;
     void regenerar();
 

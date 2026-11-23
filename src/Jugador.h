@@ -12,6 +12,14 @@ protected:
     int debilesSeguidos;   // ataques debiles desde el ultimo fuerte
     bool usoDebil;         // uso un ataque debil desde la ultima especial
     bool usoFuerte;        // uso un ataque fuerte desde la ultima especial
+    int nivel;
+    int experiencia;
+    int expParaSubir;
+
+private:
+
+    void subirNivel();
+
 
 public:
 
@@ -34,6 +42,13 @@ public:
     bool puedeUsarEspecial() const;
     void mostrarProgresoFuerte() const;
     void mostrarProgresoEspecial() const;
+
+    //Experiencia y niveles
+
+    void ganarExperiencia(int cantidad);
+    int getNivel() const;
+    int getExperiencia() const;
+    int getExpParaSubir() const;
 
     //Inventario
 
