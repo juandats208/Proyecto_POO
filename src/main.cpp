@@ -89,33 +89,53 @@ bool combatir(Jugador* jugador, Entidad* enemigo, Habitacion* actual) {
 
         // ----- Turno del jugador -----
         mostrarVidas(jugador, enemigo);
+
+        if (jugador -> getRecargaEspecial() == 1) {
+            std::cout << "*** Tu habilidad especial esta lista! ***\n";
+        }
         jugador -> reducirRecarga();
 
         if (jugador -> procesarEstados() == true) {
-            std::cout << "1. Ataque debil\n";
-            std::cout << "2. Ataque fuerte\n";
-            if (jugador -> puedeUsarEspecial()) {
-                std::cout << "3. Habilidad especial\n";
-            }
-            if (jugador -> tieneObjetos()) {
-                std::cout << "4. Usar objeto\n";
-            }
-            std::cout << "Opcion: ";
-            int opcion = leerNumero();
+            bool accionHecha = false;
 
-            if (opcion == 1) {
-                jugador -> atacar(*enemigo);
-            } else if (opcion == 2) {
-                jugador -> ataqueFuerte(*enemigo);
-            } else if (opcion == 3 && jugador -> puedeUsarEspecial()) {
-                jugador -> habilidadEspecial(*enemigo);
-            } else if (opcion == 4 && jugador -> tieneObjetos()) {
-                jugador -> mostrarInventario();
-                std::cout << "Escribe el numero del objeto: ";
-                int indice = leerNumero();
-                jugador -> usarObjeto(indice);
-            } else {
-                std::cout << "Opcion invalida, pierdes el turno\n";
+            while (accionHecha == false) {
+                std::cout << "1. Ataque debil\n";
+                std::cout << "2. Ataque fuerte\n";
+                if (jugador -> puedeUsarEspecial()) {
+                    std::cout << "3. Habilidad especial (lista!)\n";
+                } else {
+                    std::cout << "3. Habilidad especial (recargando: faltan " << jugador -> getRecargaEspecial() << " turnos)\n";
+                }
+                if (jugador -> tieneObjetos()) {
+                    std::cout << "4. Usar objeto\n";
+                }
+                std::cout << "Opcion: ";
+                int opcion = leerNumero();
+
+                if (opcion == 1) {
+                    jugador -> atacar(*enemigo);
+                    accionHecha = true;
+                } else if (opcion == 2) {
+                    jugador -> ataqueFuerte(*enemigo);
+                    accionHecha = true;
+                } else if (opcion == 3) {
+                    if (jugador -> puedeUsarEspecial()) {
+                        jugador -> habilidadEspecial(*enemigo);
+                        std::cout << "(Tu habilidad especial se recarga en 3 turnos)\n";
+                        accionHecha = true;
+                    } else {
+                        std::cout << "Tu habilidad especial todavia se esta recargando. Faltan "
+                                  << jugador -> getRecargaEspecial() << " turnos. Escoge otra opcion.\n\n";
+                    }
+                } else if (opcion == 4 && jugador -> tieneObjetos()) {
+                    jugador -> mostrarInventario();
+                    std::cout << "Escribe el numero del objeto: ";
+                    int indice = leerNumero();
+                    jugador -> usarObjeto(indice);
+                    accionHecha = true;
+                } else {
+                    std::cout << "Opcion invalida. Escoge una de las opciones del menu.\n\n";
+                }
             }
         } else if (jugador -> estaVivo()) {
             std::cout << "No puedes actuar este turno\n";
