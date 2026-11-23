@@ -2,7 +2,7 @@
 #include <iostream>
 
 MagoHielo::MagoHielo(const std::string& nombre)
-    : Jugador(nombre, 140, 11) {
+    : Jugador(nombre, 100, 10) {
 }
 
 void MagoHielo::atacar(Entidad& objetivo) {
